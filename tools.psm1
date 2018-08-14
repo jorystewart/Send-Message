@@ -56,3 +56,38 @@ function Send-Message
         Invoke-WmiMethod -Class Win32_Process -ComputerName $target -Name Create -ArgumentList "C:\Windows\System32\msg.exe * $Message" | Out-Null
     }
 }
+function Get-Uptime
+{
+    <#
+    .SYNOPSIS
+
+    Returns the date and time the system was last powered on.
+
+    .PARAMETER ComputerName
+
+    The DNS name of the computer to display a message on.
+
+
+    .INPUTS
+
+    String
+
+    .OUTPUTS
+
+    The name of the computer and the last boot time.
+
+    .EXAMPLE
+
+    Get-Uptime -ComputerName xyz
+    
+    #>
+    [cmdletbinding()]
+    Param
+    (
+        [Parameter(Mandatory,Position=0)][string]$ComputerName
+    )
+    Process
+    {
+        Get-CimInstance -ClassName win32_operatingsystem | Select-Object csname, lastbootuptime
+    }
+}
