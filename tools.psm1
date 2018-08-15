@@ -88,6 +88,6 @@ function Get-Uptime
     )
     Process
     {
-        Get-CimInstance -ClassName win32_operatingsystem | Select-Object csname, lastbootuptime
+        Get-CimInstance -ComputerName $ComputerName -ClassName win32_operatingsystem | Select-Object csname, lastbootuptime
     }
 }
